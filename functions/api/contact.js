@@ -32,7 +32,11 @@ export async function onRequestPost(context) {
     ].join('\r\n');
 
     const { connect } = await import('cloudflare:sockets');
-    const socket = connect({ hostname: env.SMTP_HOST || 'smtp.fastmail.com', port: parseInt(env.SMTP_PORT || '465') });
+    const socket = connect({
+      hostname: env.SMTP_HOST || 'smtp.fastmail.com',
+      port: parseInt(env.SMTP_PORT || '465'),
+      secureTransport: 'on'
+    });
     const writer = socket.writable.getWriter();
     const reader = socket.readable.getReader();
 
