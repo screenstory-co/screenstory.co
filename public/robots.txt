@@ -1,4 +1,6 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-Sitemap: https://screenstory.co/sitemap.xml
+# Preview deployment — block crawlers until DNS cutover
+
+Sitemap: https://screenstory-co.preview.screenstory.co/sitemap.xml
