@@ -5,7 +5,6 @@ import Page from '~/layouts/Page.astro';
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
   const posts = await getCollection('blog');
-  const forms = await getCollection('forms');
 
   const pageRoutes = pages.map((entry) => ({
     params: { slug: entry.slug === 'index' ? undefined : entry.slug },
@@ -17,12 +16,7 @@ export async function getStaticPaths() {
     props: { entry, collection: 'blog' },
   }));
 
-  const formRoutes = forms.map((entry) => ({
-    params: { slug: `forms/${entry.slug}` },
-    props: { entry, collection: 'forms' },
-  }));
-
-  return [...pageRoutes, ...postRoutes, ...formRoutes];
+  return [...pageRoutes, ...postRoutes];
 }
 
 const { entry, collection } = Astro.props;

@@ -18,12 +18,4 @@ const blog = defineCollection({
   }),
 });
 
-const forms = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-  }),
-});
-
-export const collections = { pages, blog, forms };
+export const collections = { pages, blog };
