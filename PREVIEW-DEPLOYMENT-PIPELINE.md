@@ -81,6 +81,8 @@ Zero-ambiguity process for deploying client sites to **preview URLs only**. DNS 
 - [ ] GitHub repo exists and is pushable
 - [ ] `.gitignore` includes `.dev.vars`, `node_modules/`, `dist/`
 
+> **Node version note:** Astro 5 supports Node 18+. Wrangler v3 supports Node 20. Wrangler v4 requires Node 22+. Pin wrangler to v3 if on Node 20: `npm install wrangler@3 --save-dev`
+
 ### Build Steps
 ```bash
 cd {site-slug}-content
