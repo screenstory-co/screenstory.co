@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Home from '~/layouts/Home.astro';
+
+const entry = (await getCollection('pages')).find(p => p.slug === 'index');
+const { Content } = await entry.render();
+const { title, description } = entry.data;
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => {
+  const da = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const db = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return db - da;
+});
+const latestPosts = posts.slice(0, 3);
+---
+<Home title={title} description={description}>
+  <section class="container" style="padding: 3rem 0;">
+    <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+      <Content />
+    </div>
+
+    <div style="margin-top: 3rem;">
+      <h2 style="text-align:center; margin-bottom: 1.5rem;">Latest from the Journal</h2>
+      <div class="blog-grid">
+        {latestPosts.map(post => (
+          <article class="blog-card">
+            <a href={`/blog/${post.slug}`}>
+              {post.data.category && <div class="meta">{post.data.category}</div>}
+              <h3>{post.data.title}</h3>
+              {post.data.date && <p>{new Date(post.data.date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
+            </a>
+          </article>
+        ))}
+      </div>
+      <p style="text-align:center; margin-top: 2rem;"><a href="/blog" style="font-weight: 500;">View all posts →</a></p>
+    </div>
+  </section>
+</Home>

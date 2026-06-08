@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Manager — Screen Story Co.</title>
+  <script src="https://unpkg.com/decap-cms@3.5.0/dist/decap-cms.js"></script>
+  <script src="https://sure-squid-67.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="cms-root"></div>
+  <script>
+    const CMS_CONFIG = {
+      load_config_file: false,
+      backend: {
+        name: 'github',
+        repo: 'screenstory-co/screenstory.co',
+        branch: 'main',
+        base_url: 'https://studio.screenstory.co',
+        auth_endpoint: 'api/decap/identity',
+      },
+      media_folder: 'public/uploads',
+      public_folder: '/uploads',
+      collections: [
+        {
+          name: 'pages',
+          label: 'Pages',
+          folder: 'src/content/pages',
+          create: false,
+          slug: '{{slug}}',
+          extension: 'md',
+          fields: [
+            { label: 'Title', name: 'title', widget: 'string' },
+            { label: 'Description', name: 'description', widget: 'text', required: false },
+            { label: 'Body', name: 'body', widget: 'markdown' }
+          ]
+        },
+        {
+          name: 'blog',
+          label: 'Blog Posts',
+          folder: 'src/content/blog',
+          create: true,
+          slug: '{{slug}}',
+          extension: 'md',
+          fields: [
+            { label: 'Title', name: 'title', widget: 'string' },
+            { label: 'Date', name: 'date', widget: 'date', format: 'YYYY-MM-DD', required: false },
+            { label: 'Client', name: 'client', widget: 'string', required: false },
+            { label: 'Category', name: 'category', widget: 'string', required: false },
+            { label: 'Body', name: 'body', widget: 'markdown' }
+          ]
+        }
+      ]
+    };
+
+    window.CMS_MANUAL_INIT = true;
+    window.__DECAP_CONFIG = CMS_CONFIG;
+
+    async function initCMS() {
+      const clerk = window.Clerk;
+      if (!clerk) {
+        console.error('Clerk not loaded');
+        return;
+      }
+      await clerk.load();
+      const user = await clerk.session;
+      if (!user) {
+        clerk.mountSignIn(document.getElementById('cms-root'));
+        return;
+      }
+      const token = await clerk.session.getToken();
+      CMS_CONFIG.backend.auth_scope = 'repo';
+      CMS_CONFIG.backend.token = token;
+      window.CMS.init({ config: CMS_CONFIG });
+    }
+
+    window.addEventListener('load', initCMS);
+  </script>
+</body>
+</html>

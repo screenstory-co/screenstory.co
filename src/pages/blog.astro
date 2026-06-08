@@ -1,0 +1,99 @@
+---
+import Base from '~/layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => {
+  const da = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const db = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return db - da;
+});
+---
+<Base title="Blog — Screen Story Co." description="Insights on digital strategy, web design, and SEO.">
+  <style is:global>
+    .blog-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: var(--white);
+      padding: 4rem 0;
+      text-align: center;
+    }
+    .blog-hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .blog-hero p {
+      color: #a0aec0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 3rem 0;
+    }
+    .blog-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .blog-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+    .blog-card a {
+      display: block;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .blog-card h2 {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      color: var(--navy);
+    }
+    .blog-card .meta {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    .blog-card p {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    .blog-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: var(--bg);
+    }
+  </style>
+
+  <div class="blog-hero">
+    <div class="container">
+      <h1>Journal</h1>
+      <p>Insights on digital strategy, web design, SEO, and client stories.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="blog-grid">
+      {posts.map((post) => (
+        <article class="blog-card">
+          <a href={`/blog/${post.slug}`}>
+            {post.data.category && <div class="meta">{post.data.category}</div>}
+            <h2>{post.data.title}</h2>
+            {post.data.date && (
+              <p>{new Date(post.data.date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            )}
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,201 @@
+---
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style is:global>
+    :root {
+      --navy: #1a2332;
+      --navy-light: #2a3a4f;
+      --accent: #3d7a8c;
+      --accent-hover: #2d5a6a;
+      --text: #333;
+      --text-light: #666;
+      --bg: #fafbfc;
+      --border: #e5e7eb;
+      --white: #fff;
+      --radius: 8px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--navy); line-height: 1.2; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    /* Header */
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo img { height: 40px; width: auto; }
+    .nav-main {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      padding: 0;
+    }
+    .nav-main a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text);
+    }
+    .nav-main a:hover { color: var(--accent); text-decoration: none; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--navy);
+    }
+    @media (max-width: 768px) {
+      .nav-main {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        gap: 1rem;
+      }
+      .nav-main.open { display: flex; }
+      .nav-toggle { display: block; }
+    }
+    /* Footer */
+    .site-footer {
+      background: var(--navy);
+      color: #9ca3af;
+      padding: 3rem 0 2rem;
+      margin-top: 4rem;
+    }
+    .site-footer a { color: #d1d5db; }
+    .site-footer a:hover { color: var(--white); }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-grid h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .footer-grid ul {
+      list-style: none;
+      padding: 0;
+      font-size: 0.875rem;
+    }
+    .footer-grid li { margin-bottom: 0.5rem; }
+    .footer-bottom {
+      border-top: 1px solid var(--navy-light);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">
+        <img src="/uploads/logo/screen-story-co-logo.png" alt="Screen Story Co.">
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-main').classList.toggle('open')">☰</button>
+      <nav>
+        <ul class="nav-main">
+          <li><a href="/services">Services</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/our-work">Our Work</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact-us">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/digital-strategy">Digital Strategy</a></li>
+            <li><a href="/websites">Website Design</a></li>
+            <li><a href="/services">All Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/about">About</a></li>
+            <li><a href="/our-work">Our Work</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms--conditions">Terms & Conditions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="/contact-us">Get in Touch</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2024 Screen Story Co.</span>
+        <span>Creativity, Technology, Relationships</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

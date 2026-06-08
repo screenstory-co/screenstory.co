@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '~/layouts/Page.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  const posts = await getCollection('blog');
+
+  const pageRoutes = pages.map((entry) => ({
+    params: { slug: entry.slug === 'index' ? undefined : entry.slug },
+    props: { entry, collection: 'pages' },
+  }));
+
+  const postRoutes = posts.map((entry) => ({
+    params: { slug: `blog/${entry.slug}` },
+    props: { entry, collection: 'blog' },
+  }));
+
+  return [...pageRoutes, ...postRoutes];
+}
+
+const { entry, collection } = Astro.props;
+const { Content } = await entry.render();
+---
+<Page title={entry.data.title} description={entry.data.description || ''}>
+  {collection === 'blog' && (
+    <div style="margin-bottom: 1.5rem;">
+      <a href="/blog" style="font-size: 0.875rem; color: var(--text-light);">← Back to Blog</a>
+      {entry.data.date && (
+        <span style="display: block; margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-light);">
+          {new Date(entry.data.date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {entry.data.category && ` · ${entry.data.category}`}
+        </span>
+      )}
+    </div>
+  )}
+  <Content />
+</Page>

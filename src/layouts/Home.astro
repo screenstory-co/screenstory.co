@@ -1,0 +1,130 @@
+---
+import Base from './Base.astro';
+const { title, description } = Astro.props.frontmatter || Astro.props;
+---
+<Base title={title} description={description}>
+  <style is:global>
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: var(--white);
+      padding: 5rem 0 4rem;
+      text-align: center;
+    }
+    .hero img {
+      height: 60px;
+      width: auto;
+      margin-bottom: 2rem;
+      filter: brightness(0) invert(1);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .hero p {
+      font-size: 1.125rem;
+      color: #a0aec0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .categories {
+      padding: 4rem 0;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .category-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .category-card:hover {
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .category-card img {
+      height: 48px;
+      width: auto;
+      margin-bottom: 1rem;
+    }
+    .category-card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .category-card p {
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+    .cta-bar {
+      background: var(--accent);
+      color: var(--white);
+      padding: 3rem 0;
+      text-align: center;
+    }
+    .cta-bar h2 {
+      font-size: 1.75rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .cta-bar a {
+      display: inline-block;
+      background: var(--white);
+      color: var(--accent);
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+    .cta-bar a:hover {
+      background: var(--bg);
+      color: var(--accent-hover);
+    }
+  </style>
+  <div class="hero">
+    <div class="container">
+      <img src="/uploads/logo/screen-story-co-logo.png" alt="Screen Story Co.">
+      <h1>Creativity · Technology · Relationships</h1>
+      <p>{description}</p>
+    </div>
+  </div>
+
+  <section class="categories">
+    <div class="container">
+      <h2 style="text-align:center; font-size: 2rem; margin-bottom: 0.5rem;">Who We Help</h2>
+      <p style="text-align:center; color: var(--text-light); max-width: 600px; margin: 0 auto 2rem;">Partnering with people who believe in the transformative impact of the internet on their business.</p>
+      <div class="category-grid">
+        <div class="category-card">
+          <img src="/uploads/icons/008-island.png" alt="Social Enterprise">
+          <h2>Social Enterprise</h2>
+          <p>Reach supporters and amplify your message</p>
+        </div>
+        <div class="category-card">
+          <img src="/uploads/icons/025-guitar.png" alt="Arts & Entertainment">
+          <h2>Arts & Entertainment</h2>
+          <p>Showcase your work and build your audience</p>
+        </div>
+        <div class="category-card">
+          <img src="/uploads/icons/medicine-2.png" alt="Health & Services">
+          <h2>Health & Services</h2>
+          <p>Establish credibility and serve customers online</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-bar">
+    <div class="container">
+      <h2>Ready to tell your story?</h2>
+      <p>Let's build something remarkable together.</p>
+      <a href="/contact-us">Get in Touch →</a>
+    </div>
+  </section>
+</Base>
