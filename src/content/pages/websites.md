@@ -3,10 +3,6 @@ title: "Website Design & Development"
 description: "Establishing an effective online presence is essential to your marketing efforts."
 ---
 
-![Screen Story Co.](/uploads/logo/screen-story-co-logo.png)
-
-# Your Website
-
 Establishing an effective online presence is essential to your marketing efforts. This starts with a website and we'll work with you develop a site to showcase your brand, its products and services. Our focus on usability and people centric design will ensure visitors have the best experience from whatever device they are using.
 
 ![responsive website design](/uploads/other/responsive-website.jpg)
