@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://screenstory-co.pages.dev',
+  site: 'https://screenstory.co',
   output: 'static',
   build: {
     format: 'directory'

@@ -47,6 +47,20 @@
             { label: 'Date', name: 'date', widget: 'date', format: 'YYYY-MM-DD', required: false },
             { label: 'Client', name: 'client', widget: 'string', required: false },
             { label: 'Category', name: 'category', widget: 'string', required: false },
+            { label: 'Description', name: 'description', widget: 'text', required: false },
+            { label: 'Body', name: 'body', widget: 'markdown' }
+          ]
+        },
+        {
+          name: 'forms',
+          label: 'Forms',
+          folder: 'src/content/forms',
+          create: false,
+          slug: '{{slug}}',
+          extension: 'md',
+          fields: [
+            { label: 'Title', name: 'title', widget: 'string' },
+            { label: 'Description', name: 'description', widget: 'text', required: false },
             { label: 'Body', name: 'body', widget: 'markdown' }
           ]
         }

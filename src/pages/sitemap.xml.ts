@@ -6,13 +6,13 @@ export const GET: APIRoute = async () => {
   const posts = await getCollection('blog');
 
   const pageUrls = pages.map(p => ({
-    url: `https://screenstory-co.pages.dev/${p.slug === 'index' ? '' : p.slug + '/'}`,
+    url: `https://screenstory.co/${p.slug === 'index' ? '' : p.slug + '/'}`,
     lastmod: new Date().toISOString().split('T')[0],
     priority: p.slug === 'index' ? '1.0' : '0.8'
   }));
 
   const blogUrls = posts.map(p => ({
-    url: `https://screenstory-co.pages.dev/blog/${p.slug}/`,
+    url: `https://screenstory.co/blog/${p.slug}/`,
     lastmod: p.data.date || new Date().toISOString().split('T')[0],
     priority: '0.6'
   }));
@@ -20,7 +20,7 @@ export const GET: APIRoute = async () => {
   const allUrls = [
     ...pageUrls,
     ...blogUrls,
-    { url: 'https://screenstory-co.pages.dev/blog/', lastmod: new Date().toISOString().split('T')[0], priority: '0.7' }
+    { url: 'https://screenstory.co/blog/', lastmod: new Date().toISOString().split('T')[0], priority: '0.7' }
   ];
 
   const xml = `\u003c?xml version="1.0" encoding="UTF-8"?\u003e\n` +
